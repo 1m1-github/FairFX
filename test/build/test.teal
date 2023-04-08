@@ -1,0 +1,55 @@
+#pragma version 8
+
+// int asset_id =
+
+// inner_txn:
+itxn_begin
+  // TypeEnum: Appl
+  pushint 6 // Appl
+  itxn_field TypeEnum
+  // ApplicationID: 177398602
+  pushint 177398602
+  itxn_field ApplicationID
+  // Accounts: "UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y"
+  pushbytes "UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y"
+  // pushint 1
+  itxn_field Accounts
+itxn_submit
+// end inner_txn
+
+// bytes
+// bytes lastlog = itxn(LastLog)
+// bytes logs0 = itxna(Logs, 0) [slot 0]
+itxna Logs 0
+store 0 // logs0
+// bytes logs1 = itxna(Logs, 1) [slot 1]
+itxna Logs 1
+store 1 // logs1
+
+// int logs0int = btoi(logs0) [slot 2]
+load 0 // logs0
+btoi
+store 2 // logs0int
+// int logs1int = btoi(logs1) [slot 3]
+load 1 // logs1
+btoi
+store 3 // logs1int
+
+// int x = logs0int + logs1int [slot 4]
+load 2 // logs0int
+load 3 // logs1int
++
+store 4 // x
+
+// if result == "SUBJ":
+//     log(result)
+// else:
+//    # OBJ case
+//     int numerator = btoi(result)
+// end
+
+// FX -> goes to DLT storage -> consumed by wasm/Rust
+
+// exit(1)
+pushint 1
+return

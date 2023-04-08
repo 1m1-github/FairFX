@@ -1,0 +1,20 @@
+#pragma version 8
+
+itxn_begin
+  
+  pushint 6
+  itxn_field TypeEnum
+  
+  txna Applications 1
+  itxn_field ApplicationID
+  
+  txna Applications 2
+  itxn_field Applications
+  
+  txna Accounts 1
+  itxn_field Accounts
+
+itxn_submit
+
+pushint 1
+return

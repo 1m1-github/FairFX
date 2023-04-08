@@ -1,0 +1,10 @@
+#pragma version 8
+
+txna Accounts 1
+txna Applications 1
+pushbytes "asset_1_reserves" // ASSET_1_KEY
+
+app_local_get_ex
+
+pushint 1
+return

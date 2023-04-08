@@ -1,0 +1,106 @@
+{
+  "accounts": [
+    {
+      "address": "5B3SUGACYLICWU3DHXYCS45NDNEFZCZM4MCKCKQA3DLGKZEOFQR74HLGEU",
+      "amount": 8990000,
+      "amount-without-pending-rewards": 8990000,
+      "created-apps": [
+        {
+          "id": 177398602,
+          "params": {
+            "approval-program": "CDEYgQASQQADgQFDMRmBABJAADkxGYEBEkAAGTEZgQISQAAUMRmBBBJAAA8xGYEFEkAAEACBAEOBAEMxADIJEkSBAUMxADIJEkSBAUOAOlVERldUNURXM1g1UlpRWVhLUUVNWjZNUldBRVlIV1lQN1lVQVBaS1BXNldKSzNKSDNPWlBMN1BPMlmBmKDuRoAQYXNzZXRfMV9yZXNlcnZlc2M1ADUCNAA1AzQCNQQ0A4gAFIgACzQEiAAMiAADgQFDNQU0BbCJNQY0BhaJ",
+            "clear-state-program": "CIEBQw==",
+            "creator": "5B3SUGACYLICWU3DHXYCS45NDNEFZCZM4MCKCKQA3DLGKZEOFQR74HLGEU"
+          }
+        },
+        {
+          "id": 177419770,
+          "params": {
+            "approval-program": "CLGBBrIQgcrGy1SyGLO1OgA1ALU6ATUBNAAXNQI0ARc1AzQCNAMINQSBAUM=",
+            "clear-state-program": "CIEBQw==",
+            "creator": "5B3SUGACYLICWU3DHXYCS45NDNEFZCZM4MCKCKQA3DLGKZEOFQR74HLGEU"
+          }
+        }
+      ],
+      "min-balance": 300000,
+      "pending-rewards": 0,
+      "reward-base": 27521,
+      "rewards": 0,
+      "round": 28997204,
+      "status": "Offline",
+      "total-apps-opted-in": 0,
+      "total-assets-opted-in": 0,
+      "total-created-apps": 2,
+      "total-created-assets": 0
+    },
+    {
+      "address": "MOOM2XFSWZ2PNM23R2EHFUFLAAUDQJ77AVW3VOAYNDSRGRPYHKDFXUJI3Q",
+      "amount": 998000,
+      "amount-without-pending-rewards": 998000,
+      "min-balance": 100000,
+      "pending-rewards": 0,
+      "reward-base": 27521,
+      "rewards": 0,
+      "round": 28997204,
+      "status": "Offline",
+      "total-apps-opted-in": 0,
+      "total-assets-opted-in": 0,
+      "total-created-apps": 0,
+      "total-created-assets": 0
+    },
+    {
+      "address": "Y46IEUKGFPIQJWLDOUL34N4M3Q4XC6JZB7OTX3SGK64GFFSWW4P34OEMXQ",
+      "amount": 0,
+      "amount-without-pending-rewards": 0,
+      "min-balance": 100000,
+      "pending-rewards": 0,
+      "reward-base": 27521,
+      "rewards": 0,
+      "round": 28997204,
+      "status": "Offline",
+      "total-apps-opted-in": 0,
+      "total-assets-opted-in": 0,
+      "total-created-apps": 0,
+      "total-created-assets": 0
+    }
+  ],
+  "apps": [
+    {
+      "id": 177419770,
+      "params": {
+        "approval-program": "CLGBBrIQgcrGy1SyGLO1OgA1ALU6ATUBNAAXNQI0ARc1AzQCNAMINQSBAUM=",
+        "clear-state-program": "CIEBQw==",
+        "creator": "5B3SUGACYLICWU3DHXYCS45NDNEFZCZM4MCKCKQA3DLGKZEOFQR74HLGEU"
+      }
+    },
+    {
+      "id": 177398602,
+      "params": {
+        "approval-program": "CDEYgQASQQADgQFDMRmBABJAADkxGYEBEkAAGTEZgQISQAAUMRmBBBJAAA8xGYEFEkAAEACBAEOBAEMxADIJEkSBAUMxADIJEkSBAUOAOlVERldUNURXM1g1UlpRWVhLUUVNWjZNUldBRVlIV1lQN1lVQVBaS1BXNldKSzNKSDNPWlBMN1BPMlmBmKDuRoAQYXNzZXRfMV9yZXNlcnZlc2M1ADUCNAA1AzQCNQQ0A4gAFIgACzQEiAAMiAADgQFDNQU0BbCJNQY0BhaJ",
+        "clear-state-program": "CIEBQw==",
+        "creator": "5B3SUGACYLICWU3DHXYCS45NDNEFZCZM4MCKCKQA3DLGKZEOFQR74HLGEU"
+      }
+    }
+  ],
+  "latest-timestamp": 1680965635,
+  "protocol-version": "https://github.com/algorandfoundation/specs/tree/44fa607d6051730f5264526bf3c108d51f0eadb6",
+  "round": 28997204,
+  "sources": null,
+  "txns": [
+    {
+  "txn": {
+    "apfa": [
+      177398602
+    ],
+    "apid": 177419770,
+    "fee": 1000,
+    "fv": 28997205,
+    "gh": "SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=",
+    "lv": 28998205,
+    "note": "UNTr5y5ey7A=",
+    "snd": "5B3SUGACYLICWU3DHXYCS45NDNEFZCZM4MCKCKQA3DLGKZEOFQR74HLGEU",
+    "type": "appl"
+  }
+}
+  ]
+}

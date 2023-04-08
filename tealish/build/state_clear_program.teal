@@ -1,0 +1,5 @@
+#pragma version 8
+
+// exit(1)
+pushint 1
+return
