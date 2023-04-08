@@ -1,13 +1,5 @@
 #pragma version 8
 
-# currency is represented as in int
-
-# struct Item:
-#     id: int
-#     owner: bytes[32]
-#     content: bytes[100]
-# end
-
 if Txn.ApplicationID == 0:
     # Handle Create App
     exit(1)
@@ -56,46 +48,17 @@ block main:
 # pool account testnet USDC/ALGO UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y 
 # 148607000 tinyman testnet main app
 
-    # address
-    const bytes TINYMAN_ADDRESS = "UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y"
-    const int TINYMAN_APP = 148607000
-    const bytes ASSET_1_KEY = "asset_1_reserves"
-    int exists
-    bytes asset_1_reserves_bytes
-    int asset_1_reserves
-    exists, asset_1_reserves = app_local_get_ex(TINYMAN_ADDRESS, TINYMAN_APP, ASSET_1_KEY)
+    int currency = Txn.Assets[0]
 
-    # int n = exists
-    # int d = asset_1_reserves
-    int n = 6
-    int d = 4
-    # bytes nb = abi_encode_uint64(n)
-    # bytes db = abi_encode_uint64(d)
-    # bytes b = nb + db
-    # abi_return(b)
-    abi_return(abi_encode_uint64(n))
-    abi_return(abi_encode_uint64(d))
+    if currency == 10458941
+        tinyman("UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y")
+    # elif currency == ...
+    else:
+        abi_return("SUBJ")
+        exit(1)
+    end
+
     exit(1)
-
-    # switch Txn.ApplicationArgs[0]:
-    #     "is_obj": is_obj
-    #     "is_subj": is_subj
-    #     "fx": fx
-    # end
-
-    # block is_obj:
-    #     int currency = Txn.Assets[0]
-
-    #     exit(1)
-    # end
-
-    # block is_subj:
-
-    # end
-
-    # block fx:
-
-    # end
 
     # block add:
     #     # Add 2 integers
@@ -160,6 +123,16 @@ block main:
     #     abi_return(abi_encode_uint64(result))
     #     exit(1)
     # end
+end
+
+func tinyman(currency: int) int, int
+    bytes lp_address = Txn.Accounts[1]
+    const int LP_APP = 148607000
+    const bytes ASSET_1_KEY = "asset_1_reserves"
+    int exists
+    # bytes asset_1_reserves_bytes
+    int asset_1_reserves
+    exists, asset_1_reserves = app_local_get_ex(lp_address, LP_APP, ASSET_1_KEY)
 end
 
 # func is_obj():
