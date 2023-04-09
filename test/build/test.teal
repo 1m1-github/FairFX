@@ -1,55 +1,97 @@
 #pragma version 8
 
-// int asset_id =
+// if Txn.ApplicationID == 0:
+  txn ApplicationID
+  pushint 0
+  ==
+  bz l0_end
+  // then:
+    // Handle Create App
+    // exit(1)
+    pushint 1
+    return
+  l0_end: // end
 
-// inner_txn:
-itxn_begin
-  // TypeEnum: Appl
-  pushint 6 // Appl
-  itxn_field TypeEnum
-  // ApplicationID: 177398602
-  pushint 177398602
-  itxn_field ApplicationID
-  // Accounts: "UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y"
-  pushbytes "UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y"
-  // pushint 1
-  itxn_field Accounts
-itxn_submit
-// end inner_txn
+// switch Txn.OnCompletion:
+txn OnCompletion
+pushint 0 // NoOp
+==
+bnz main
+txn OnCompletion
+pushint 1 // OptIn
+==
+bnz opt_in
+txn OnCompletion
+pushint 2 // CloseOut
+==
+bnz close_out
+txn OnCompletion
+pushint 4 // UpdateApplication
+==
+bnz update_app
+txn OnCompletion
+pushint 5 // DeleteApplication
+==
+bnz delete_app
+err // unexpected value
 
-// bytes
-// bytes lastlog = itxn(LastLog)
-// bytes logs0 = itxna(Logs, 0) [slot 0]
-itxna Logs 0
-store 0 // logs0
-// bytes logs1 = itxna(Logs, 1) [slot 1]
-itxna Logs 1
-store 1 // logs1
+// block opt_in
+opt_in:
+  // Disallow Opt In
+  // exit(0)
+  pushint 0
+  return
 
-// int logs0int = btoi(logs0) [slot 2]
-load 0 // logs0
-btoi
-store 2 // logs0int
-// int logs1int = btoi(logs1) [slot 3]
-load 1 // logs1
-btoi
-store 3 // logs1int
+// block close_out
+close_out:
+  // Disallow Closing Out
+  // exit(0)
+  pushint 0
+  return
 
-// int x = logs0int + logs1int [slot 4]
-load 2 // logs0int
-load 3 // logs1int
-+
-store 4 // x
+// block update_app
+update_app:
+  // Handle Update App
+  // Only allow the Creator to update the app
+  // assert(Txn.Sender == Global.CreatorAddress)
+  txn Sender
+  global CreatorAddress
+  ==
+  assert
+  // (for now)
+  // exit(1)
+  pushint 1
+  return
 
-// if result == "SUBJ":
-//     log(result)
-// else:
-//    # OBJ case
-//     int numerator = btoi(result)
-// end
+// block delete_app
+delete_app:
+  // Handle Delete App
+  // Only allow the Creator to delete the app
+  // assert(Txn.Sender == Global.CreatorAddress)
+  txn Sender
+  global CreatorAddress
+  ==
+  assert
+  // (for now)
+  // exit(1)
+  pushint 1
+  return
 
-// FX -> goes to DLT storage -> consumed by wasm/Rust
-
-// exit(1)
-pushint 1
-return
+// block main
+main:
+  // bytes fx_log = Gtxn[0].LastLog [slot 0]
+  gtxn 0 LastLog
+  store 0 // fx_log
+  
+  // int l = len(fx_log) [slot 1]
+  load 0 // fx_log
+  len
+  store 1 // l
+  // app_global_put("l", l)
+  pushbytes "l"
+  load 1 // l
+  app_global_put
+  
+  // exit(1)
+  pushint 1
+  return

@@ -49,15 +49,26 @@ block main:
 # 148607000 tinyman testnet main app
 
     int currency = Txn.Assets[0]
+    int n
+    int d
 
-    if currency == 10458941
-        tinyman("UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y")
-    # elif currency == ...
+    addr a = UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y <- NOT WORKING
+
+    # USDC
+    if currency == 10458941:
+        n, d = tinyman("UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y")
+    # TINYAU
+    elif currency == 21582981:
+        n, d = tinyman("DNPVHOLSYCBDA6UAB3MREZN6W4MZZV4OL227B5ABABQTHCJFMLD345JPXE")
     else:
-        abi_return("SUBJ")
+        # TODO if itob(n) starts with "SUBJECTIVE", its a mistake
+        abi_return("SUBJECTIVE")
         exit(1)
     end
 
+    bytes nb = abi_encode_uint64(n)
+    bytes db = abi_encode_uint64(d)
+    abi_return(concat(nb, db))
     exit(1)
 
     # block add:
@@ -125,17 +136,31 @@ block main:
     # end
 end
 
-func tinyman(currency: int) int, int
-    bytes lp_address = Txn.Accounts[1]
+func tinyman(lp_address: bytes) int, int:
+    # bytes lp_address = Txn.Accounts[1]
     const int LP_APP = 148607000
     const bytes ASSET_1_KEY = "asset_1_reserves"
-    int exists
-    # bytes asset_1_reserves_bytes
+    const bytes ASSET_2_KEY = "asset_2_reserves"
     int asset_1_reserves
-    exists, asset_1_reserves = app_local_get_ex(lp_address, LP_APP, ASSET_1_KEY)
+    _, asset_1_reserves = app_local_get_ex(lp_address, LP_APP, ASSET_1_KEY)
+    int asset_2_reserves
+    _, asset_2_reserves = app_local_get_ex(lp_address, LP_APP, ASSET_2_KEY)
+
+    return asset_1_reserves, asset_2_reserves
 end
 
 # func is_obj():
+#     return
+# end
+
+# func abi_return_int(result):
+#     # log(concat("\x15\x1f\x7c\x75", result))
+#     # log(result)
+#     int r = result
+#     teal:
+#         store 0
+#     end
+#     log(itob(result0))
 #     return
 # end
 

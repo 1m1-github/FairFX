@@ -1,13 +1,5 @@
 #pragma version 8
 
-// currency is represented as in int
-
-// struct Item:
-//     id: int
-//     owner: bytes[32]
-//     content: bytes[100]
-// end
-
 // if Txn.ApplicationID == 0:
   txn ApplicationID
   pushint 0
@@ -95,61 +87,70 @@ main:
   // pool account testnet USDC/ALGO UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y
   // 148607000 tinyman testnet main app
   
-  // int exists [slot 0]
-  // bytes asset_1_reserves_bytes [slot 1]
-  // int asset_1_reserves [slot 2]
-  // exists, asset_1_reserves = app_local_get_ex(TINYMAN_ADDRESS, TINYMAN_APP, ASSET_1_KEY)
-  // pushbytes "UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y" // TINYMAN_ADDRESS
-  // pushint 1
-  // pushint 148607000 // TINYMAN_APP
-  // pushbytes "asset_1_reserves" // ASSET_1_KEY
-  // app_local_get_ex
-  // store 0 // exists
-  // store 2 // asset_1_reserves
+  // int currency = Txn.Assets[0] [slot 0]
+  txna Assets 0
+  store 0 // currency
+  // int n [slot 1]
+  // int d [slot 2]
   
-  // int n = exists
-  // int d = asset_1_reserves
-  // int n = 6 [slot 3]
-  pushint 6
-  store 3 // n
-  // int d = 4 [slot 4]
+  // int a = 4 [slot 3]
   pushint 4
-  store 4 // d
-  // bytes nb = abi_encode_uint64(n)
-  // bytes db = abi_encode_uint64(d)
-  // bytes b = nb + db
-  // abi_return(b)
-  // abi_return(abi_encode_uint64(n))
-  load 3 // n
+  store 3 // a
+  // UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y
+  
+  // USDC
+  // if currency == 10458941:
+    load 0 // currency
+    pushint 10458941
+    ==
+    bz l1_elif_0
+    // then:
+      // n, d = tinyman("UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y")
+      pushbytes "UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y"
+      callsub __func__tinyman
+      store 1 // n
+      store 2 // d
+      // TINYAU
+    b l1_end
+    l1_elif_0:
+    // elif currency == 21582981:
+    load 0 // currency
+    pushint 21582981
+    ==
+    bz l1_else
+      // n, d = tinyman("DNPVHOLSYCBDA6UAB3MREZN6W4MZZV4OL227B5ABABQTHCJFMLD345JPXE")
+      pushbytes "DNPVHOLSYCBDA6UAB3MREZN6W4MZZV4OL227B5ABABQTHCJFMLD345JPXE"
+      callsub __func__tinyman
+      store 1 // n
+      store 2 // d
+    b l1_end
+    l1_else:
+    // else:
+      // TODO if itob(n) starts with "SUBJECTIVE", its a mistake
+      // abi_return("SUBJECTIVE")
+      pushbytes "SUBJECTIVE"
+      callsub __func__abi_return
+      // exit(1)
+      pushint 1
+      return
+    l1_end: // end
+  
+  // bytes nb = abi_encode_uint64(n) [slot 4]
+  load 1 // n
   callsub __func__abi_encode_uint64
-  callsub __func__abi_return
-  // abi_return(abi_encode_uint64(d))
-  load 4 // d
+  store 4 // nb
+  // bytes db = abi_encode_uint64(d) [slot 5]
+  load 2 // d
   callsub __func__abi_encode_uint64
+  store 5 // db
+  // abi_return(concat(nb, db))
+  load 4 // nb
+  load 5 // db
+  concat
   callsub __func__abi_return
   // exit(1)
   pushint 1
   return
-  
-  // switch Txn.ApplicationArgs[0]:
-  //     "is_obj": is_obj
-  //     "is_subj": is_subj
-  //     "fx": fx
-  // end
-  
-  // block is_obj:
-  //     int currency = Txn.Assets[0]
-  
-  //     exit(1)
-  // end
-  
-  // block is_subj:
-  
-  // end
-  
-  // block fx:
-  
-  // end
   
   // block add:
   //     # Add 2 integers
@@ -215,16 +216,53 @@ main:
   //     exit(1)
   // end
 
+// func tinyman(lp_address: bytes) int, int:
+__func__tinyman:
+store 6 // lp_address
+// bytes lp_address = Txn.Accounts[1]
+// int asset_1_reserves [slot 7]
+// _, asset_1_reserves = app_local_get_ex(lp_address, LP_APP, ASSET_1_KEY)
+load 6 // lp_address
+pushint 148607000 // LP_APP
+pushbytes "asset_1_reserves" // ASSET_1_KEY
+app_local_get_ex
+pop // discarding value for _
+store 7 // asset_1_reserves
+// int asset_2_reserves [slot 8]
+// _, asset_2_reserves = app_local_get_ex(lp_address, LP_APP, ASSET_2_KEY)
+load 6 // lp_address
+pushint 148607000 // LP_APP
+pushbytes "asset_2_reserves" // ASSET_2_KEY
+app_local_get_ex
+pop // discarding value for _
+store 8 // asset_2_reserves
+
+// return asset_1_reserves, asset_2_reserves
+load 8 // asset_2_reserves
+load 7 // asset_1_reserves
+retsub
+
 // func is_obj():
+//     return
+// end
+
+// func abi_return_int(result):
+//     # log(concat("\x15\x1f\x7c\x75", result))
+//     # log(result)
+//     int r = result
+//     teal:
+//         store 0
+//     end
+//     log(itob(result0))
 //     return
 // end
 
 // func abi_return(result: bytes):
 __func__abi_return:
-store 5 // result
+store 9 // result
 // log(concat("\x15\x1f\x7c\x75", result))
 // log(result)
-load 5 // result
+load 9 // result
 log
 // return
 retsub
@@ -241,9 +279,9 @@ retsub
 
 // func abi_encode_uint64(value: int) bytes:
 __func__abi_encode_uint64:
-store 6 // value
+store 10 // value
 // return itob(value)
-load 6 // value
+load 10 // value
 itob
 retsub
 

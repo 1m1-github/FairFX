@@ -1,32 +1,49 @@
 #pragma version 8
 
-# int asset_id = 
-
-inner_txn:
-    TypeEnum: Appl
-    ApplicationID: 177398602
-    # Assets: asset_id
-    # Applications: 
-    Accounts: "UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y"
+if Txn.ApplicationID == 0:
+    # Handle Create App
+    exit(1)
 end
 
-# bytes
-# bytes lastlog = itxn(LastLog)
-bytes logs0 = itxna(Logs, 0)
-bytes logs1 = itxna(Logs, 1)
+switch Txn.OnCompletion:
+    NoOp: main
+    OptIn: opt_in
+    CloseOut: close_out
+    UpdateApplication: update_app
+    DeleteApplication: delete_app
+end
 
-int logs0int = btoi(logs0)
-int logs1int = btoi(logs1)
+block opt_in:
+    # Disallow Opt In
+    exit(0)
+end
 
-int x = logs0int + logs1int
+block close_out:
+    # Disallow Closing Out
+    exit(0)
+end
 
-# if result == "SUBJ":
-#     log(result)
-# else:
-#    # OBJ case
-#     int numerator = btoi(result)
-# end
+block update_app:
+    # Handle Update App
+    # Only allow the Creator to update the app
+    assert(Txn.Sender == Global.CreatorAddress)
+     # (for now)
+    exit(1)
+end
 
-# FX -> goes to DLT storage -> consumed by wasm/Rust
+block delete_app:
+    # Handle Delete App
+    # Only allow the Creator to delete the app
+    assert(Txn.Sender == Global.CreatorAddress)
+     # (for now)
+    exit(1)
+end
 
-exit(1)
+block main:
+    bytes fx_log = Gtxn[0].LastLog
+
+    int l = len(fx_log)
+    app_global_put("l", l)
+
+    exit(1)
+end
