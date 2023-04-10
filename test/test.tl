@@ -48,6 +48,9 @@ block main:
         app_global_put("n", n)
         int d = extract_uint64(fx_log, 8)
         app_global_put("d", d)
+    else:
+        app_global_put("n", 0)
+        app_global_put("d", 0)
     end
 
     exit(1)

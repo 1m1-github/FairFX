@@ -91,7 +91,7 @@ main:
     load 0 // fx_log
     pushbytes "SUBJECTIVE"
     !=
-    bz l1_end
+    bz l1_else
     // then:
       // int n = extract_uint64(fx_log, 0) [slot 1]
       load 0 // fx_log
@@ -110,6 +110,17 @@ main:
       // app_global_put("d", d)
       pushbytes "d"
       load 2 // d
+      app_global_put
+    b l1_end
+    l1_else:
+    // else:
+      // app_global_put("n", 0)
+      pushbytes "n"
+      pushint 0
+      app_global_put
+      // app_global_put("d", 0)
+      pushbytes "d"
+      pushint 0
       app_global_put
     l1_end: // end
   

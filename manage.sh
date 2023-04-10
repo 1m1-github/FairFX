@@ -43,6 +43,9 @@ goal app call --app-id $APP_ID --from $CREATOR --foreign-app $LP_APP --foreign-a
 goal clerk dryrun -t $TXNS_DIR/fx.stxn --dryrun-dump -o $TXNS_DIR/dryrun.json
 tealdbg debug $TEAL_DIR/$APPROVAL_FILE_NAME.teal -d $TXNS_DIR/dryrun.json
 
+goal app call --app-id $APP_ID --from $CREATOR --foreign-app $LP_APP --foreign-asset 21582982 --app-account DNPVHOLSYCBDA6UAB3MREZN6W4MZZV4OL227B5ABABQTHCJFMLD345JPXE --out $TXNS_DIR/fx.stxn
+goal clerk dryrun -t $TXNS_DIR/fx.stxn --dryrun-dump -o $TXNS_DIR/dryrun.json
+tealdbg debug $TEAL_DIR/$APPROVAL_FILE_NAME.teal -d $TXNS_DIR/dryrun.json
 
 # test
 tealish compile test/test.tl
@@ -53,6 +56,7 @@ goal app update --app-id=$TEST_APP_ID --from=$CREATOR --approval-prog test/build
 # call test
 goal app call --app-id $APP_ID --from $CREATOR --foreign-app $LP_APP --foreign-asset 10458941 --app-account UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y --out $TXNS_DIR/A.txn
 goal app call --app-id $APP_ID --from $CREATOR --foreign-app $LP_APP --foreign-asset 21582981 --app-account DNPVHOLSYCBDA6UAB3MREZN6W4MZZV4OL227B5ABABQTHCJFMLD345JPXE --out $TXNS_DIR/A.txn
+goal app call --app-id $APP_ID --from $CREATOR --foreign-app $LP_APP --foreign-asset 21582982 --app-account DNPVHOLSYCBDA6UAB3MREZN6W4MZZV4OL227B5ABABQTHCJFMLD345JPXE --out $TXNS_DIR/A.txn
 goal app call --app-id $TEST_APP_ID --from $CREATOR --out $TXNS_DIR/B.txn
 cat $TXNS_DIR/A.txn $TXNS_DIR/B.txn > $TXNS_DIR/combined.txn
 goal clerk group --infile $TXNS_DIR/combined.txn --outfile $TXNS_DIR/call.txn
@@ -69,3 +73,4 @@ tealdbg debug $SYSTEM_APPROVAL_FILE -d $TXNS_DIR/dryrun.json --group-index 0
 // update - disabled in prod
 goal app update --app-id=$APP_ID --from=$CREATOR --approval-prog $TEAL_DIR/$APPROVAL_FILE_NAME.teal --clear-prog $TEAL_DIR/$CLEAR_FILE_NAME.teal
 
+goal app read --app-id=$TEST_APP_ID --global
