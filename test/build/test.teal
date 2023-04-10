@@ -82,15 +82,36 @@ main:
   // bytes fx_log = Gtxn[0].LastLog [slot 0]
   gtxn 0 LastLog
   store 0 // fx_log
-  
-  // int l = len(fx_log) [slot 1]
+  // app_global_put("fx_log", fx_log)
+  pushbytes "fx_log"
   load 0 // fx_log
-  len
-  store 1 // l
-  // app_global_put("l", l)
-  pushbytes "l"
-  load 1 // l
   app_global_put
+  
+  // if fx_log != "SUBJECTIVE":
+    load 0 // fx_log
+    pushbytes "SUBJECTIVE"
+    !=
+    bz l1_end
+    // then:
+      // int n = extract_uint64(fx_log, 0) [slot 1]
+      load 0 // fx_log
+      pushint 0
+      extract_uint64
+      store 1 // n
+      // app_global_put("n", n)
+      pushbytes "n"
+      load 1 // n
+      app_global_put
+      // int d = extract_uint64(fx_log, 8) [slot 2]
+      load 0 // fx_log
+      pushint 8
+      extract_uint64
+      store 2 // d
+      // app_global_put("d", d)
+      pushbytes "d"
+      load 2 // d
+      app_global_put
+    l1_end: // end
   
   // exit(1)
   pushint 1

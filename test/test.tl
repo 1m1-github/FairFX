@@ -41,9 +41,14 @@ end
 
 block main:
     bytes fx_log = Gtxn[0].LastLog
+    app_global_put("fx_log", fx_log)
 
-    int l = len(fx_log)
-    app_global_put("l", l)
+    if fx_log != "SUBJECTIVE":
+        int n = extract_uint64(fx_log, 0)
+        app_global_put("n", n)
+        int d = extract_uint64(fx_log, 8)
+        app_global_put("d", d)
+    end
 
     exit(1)
 end

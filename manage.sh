@@ -22,14 +22,27 @@ goal wallet new $WALLET
 goal account new -w $WALLET
 goal clerk send -a 1000000 -f $CREATOR -t $A -w $WALLET
 
+99,866
+368,413,727
+
 # create teal
 tealish compile $TEALISH_DIR/$APPROVAL_FILE_NAME.tl
 tealish compile $TEALISH_DIR/$CLEAR_FILE_NAME.tl
 
-# create ap
+# create app
 goal app create --creator $CREATOR --approval-prog $TEAL_DIR/$APPROVAL_FILE_NAME.teal --clear-prog $TEAL_DIR/$CLEAR_FILE_NAME.teal --global-byteslices 0 --global-ints 0 --local-byteslices 0 --local-ints 0
 goal app info --app-id $APP_ID
 goal app update --app-id=$APP_ID --from=$CREATOR --approval-prog $TEAL_DIR/$APPROVAL_FILE_NAME.teal --clear-prog $TEAL_DIR/$CLEAR_FILE_NAME.teal
+
+# call fx
+goal app call --app-id $APP_ID --from $CREATOR --foreign-app $LP_APP --foreign-asset 10458941 --app-account UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y --out $TXNS_DIR/fx.stxn
+goal clerk dryrun -t $TXNS_DIR/fx.stxn --dryrun-dump -o $TXNS_DIR/dryrun.json
+tealdbg debug $TEAL_DIR/$APPROVAL_FILE_NAME.teal -d $TXNS_DIR/dryrun.json
+
+goal app call --app-id $APP_ID --from $CREATOR --foreign-app $LP_APP --foreign-asset 21582981 --app-account DNPVHOLSYCBDA6UAB3MREZN6W4MZZV4OL227B5ABABQTHCJFMLD345JPXE --out $TXNS_DIR/fx.stxn
+goal clerk dryrun -t $TXNS_DIR/fx.stxn --dryrun-dump -o $TXNS_DIR/dryrun.json
+tealdbg debug $TEAL_DIR/$APPROVAL_FILE_NAME.teal -d $TXNS_DIR/dryrun.json
+
 
 # test
 tealish compile test/test.tl
@@ -38,18 +51,16 @@ export TEST_APP_ID=178979676
 goal app update --app-id=$TEST_APP_ID --from=$CREATOR --approval-prog test/build/test.teal --clear-prog $TEAL_DIR/$CLEAR_FILE_NAME.teal
 
 # call test
-goal app call --app-id $APP_ID --from $CREATOR --foreign-app $LP_APP --foreign-asset 10458941 --app-account UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y --out A.txn
-goal app call --app-id $TEST_APP_ID --from $CREATOR --out B.txn
-cat A.txn B.txn > combined.txn
-goal clerk group --infile combined.txn --outfile call.txn
-goal clerk sign --infile call.txn --outfile call.stxn
-goal clerk rawsend --filename call.stxn
-goal clerk dryrun -t call.stxn --dryrun-dump -o dryrun.json
-tealdbg debug B.teal -d dryrun.json --group-index 1
-
-goal app call --app-id=$TEST_APP_ID --from $CREATOR --foreign-app=$APP_ID --out=$TXNS_DIR/appcall_test.stxn
-goal clerk dryrun -t $TXNS_DIR/appcall_test.stxn --dryrun-dump -o $TXNS_DIR/dryrun.json
-tealdbg debug test/build/test.teal -d $TXNS_DIR/dryrun.json
+goal app call --app-id $APP_ID --from $CREATOR --foreign-app $LP_APP --foreign-asset 10458941 --app-account UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y --out $TXNS_DIR/A.txn
+goal app call --app-id $APP_ID --from $CREATOR --foreign-app $LP_APP --foreign-asset 21582981 --app-account DNPVHOLSYCBDA6UAB3MREZN6W4MZZV4OL227B5ABABQTHCJFMLD345JPXE --out $TXNS_DIR/A.txn
+goal app call --app-id $TEST_APP_ID --from $CREATOR --out $TXNS_DIR/B.txn
+cat $TXNS_DIR/A.txn $TXNS_DIR/B.txn > $TXNS_DIR/combined.txn
+goal clerk group --infile $TXNS_DIR/combined.txn --outfile $TXNS_DIR/call.txn
+goal clerk sign --infile $TXNS_DIR/call.txn --outfile $TXNS_DIR/call.stxn
+goal clerk dryrun -t $TXNS_DIR/call.stxn --dryrun-dump -o $TXNS_DIR/dryrun.json
+tealdbg debug $TEAL_DIR/$APPROVAL_FILE_NAME.teal -d $TXNS_DIR/dryrun.json --group-index 0 --mode application
+tealdbg debug test/build/test.teal -d $TXNS_DIR/dryrun.json --group-index 1 --mode application
+goal clerk rawsend --filename $TXNS_DIR/call.stxn
 
 # debug
 goal clerk send --amount 100000 --from $CREATOR --to $APP_ACCOUNT --wallet $WALLET

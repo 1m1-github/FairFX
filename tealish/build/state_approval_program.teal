@@ -77,26 +77,15 @@ delete_app:
   pushint 1
   return
 
-// int base_currency = 0
-
 // block main
 main:
-  
-  // buttcoin 34,384,959
-  // micro algo 27,192,761,081
-  // pool account testnet USDC/ALGO UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y
-  // 148607000 tinyman testnet main app
   
   // int currency = Txn.Assets[0] [slot 0]
   txna Assets 0
   store 0 // currency
   // int n [slot 1]
   // int d [slot 2]
-  
-  // int a = 4 [slot 3]
-  pushint 4
-  store 3 // a
-  // UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y
+  // bytes addr [slot 3]
   
   // USDC
   // if currency == 10458941:
@@ -105,8 +94,16 @@ main:
     ==
     bz l1_elif_0
     // then:
-      // n, d = tinyman("UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y")
-      pushbytes "UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y"
+      // addr UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      store 3 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 3 // addr
+      ==
+      assert
+      // n, d = tinyman()
       callsub __func__tinyman
       store 1 // n
       store 2 // d
@@ -118,8 +115,16 @@ main:
     pushint 21582981
     ==
     bz l1_else
-      // n, d = tinyman("DNPVHOLSYCBDA6UAB3MREZN6W4MZZV4OL227B5ABABQTHCJFMLD345JPXE")
-      pushbytes "DNPVHOLSYCBDA6UAB3MREZN6W4MZZV4OL227B5ABABQTHCJFMLD345JPXE"
+      // addr DNPVHOLSYCBDA6UAB3MREZN6W4MZZV4OL227B5ABABQTHCJFMLD345JPXE
+      // addr = "\x1b_S\xb9r\xc0\x820z\x80\x0e\xd9\x12e\xbe\xb7\x19\x9c\xd7\x8e^\xb5\xf0\xf4\x01\x00a3\x89%b\xc7"
+      pushbytes "\x1b_S\xb9r\xc0\x820z\x80\x0e\xd9\x12e\xbe\xb7\x19\x9c\xd7\x8e^\xb5\xf0\xf4\x01\x00a3\x89%b\xc7"
+      store 3 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 3 // addr
+      ==
+      assert
+      // n, d = tinyman()
       callsub __func__tinyman
       store 1 // n
       store 2 // d
@@ -216,30 +221,28 @@ main:
   //     exit(1)
   // end
 
-// func tinyman(lp_address: bytes) int, int:
+// func tinyman() int, int:
 __func__tinyman:
-store 6 // lp_address
-// bytes lp_address = Txn.Accounts[1]
-// int asset_1_reserves [slot 7]
-// _, asset_1_reserves = app_local_get_ex(lp_address, LP_APP, ASSET_1_KEY)
-load 6 // lp_address
+// int asset_1_reserves [slot 6]
+// _, asset_1_reserves = app_local_get_ex(Txn.Accounts[1], LP_APP, ASSET_1_KEY)
+txna Accounts 1
 pushint 148607000 // LP_APP
 pushbytes "asset_1_reserves" // ASSET_1_KEY
 app_local_get_ex
 pop // discarding value for _
-store 7 // asset_1_reserves
-// int asset_2_reserves [slot 8]
-// _, asset_2_reserves = app_local_get_ex(lp_address, LP_APP, ASSET_2_KEY)
-load 6 // lp_address
+store 6 // asset_1_reserves
+// int asset_2_reserves [slot 7]
+// _, asset_2_reserves = app_local_get_ex(Txn.Accounts[1], LP_APP, ASSET_2_KEY)
+txna Accounts 1
 pushint 148607000 // LP_APP
 pushbytes "asset_2_reserves" // ASSET_2_KEY
 app_local_get_ex
 pop // discarding value for _
-store 8 // asset_2_reserves
+store 7 // asset_2_reserves
 
 // return asset_1_reserves, asset_2_reserves
-load 8 // asset_2_reserves
-load 7 // asset_1_reserves
+load 7 // asset_2_reserves
+load 6 // asset_1_reserves
 retsub
 
 // func is_obj():
@@ -259,10 +262,10 @@ retsub
 
 // func abi_return(result: bytes):
 __func__abi_return:
-store 9 // result
+store 8 // result
 // log(concat("\x15\x1f\x7c\x75", result))
 // log(result)
-load 9 // result
+load 8 // result
 log
 // return
 retsub
@@ -279,9 +282,9 @@ retsub
 
 // func abi_encode_uint64(value: int) bytes:
 __func__abi_encode_uint64:
-store 10 // value
+store 9 // value
 // return itob(value)
-load 10 // value
+load 9 // value
 itob
 retsub
 

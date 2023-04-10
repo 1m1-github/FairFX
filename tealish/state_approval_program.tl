@@ -39,27 +39,25 @@ block delete_app:
     exit(1)
 end
 
-# int base_currency = 0
-
 block main:
-
-# buttcoin 34,384,959
-# micro algo 27,192,761,081
-# pool account testnet USDC/ALGO UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y 
-# 148607000 tinyman testnet main app
 
     int currency = Txn.Assets[0]
     int n
     int d
-
-    addr a = UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y <- NOT WORKING
+    bytes addr
 
     # USDC
     if currency == 10458941:
-        n, d = tinyman("UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y")
+        # addr UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y
+        addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+        assert(Txn.Accounts[1] == addr)
+        n, d = tinyman()
     # TINYAU
     elif currency == 21582981:
-        n, d = tinyman("DNPVHOLSYCBDA6UAB3MREZN6W4MZZV4OL227B5ABABQTHCJFMLD345JPXE")
+        # addr DNPVHOLSYCBDA6UAB3MREZN6W4MZZV4OL227B5ABABQTHCJFMLD345JPXE
+        addr = "\x1b_S\xb9r\xc0\x820z\x80\x0e\xd9\x12e\xbe\xb7\x19\x9c\xd7\x8e^\xb5\xf0\xf4\x01\x00a3\x89%b\xc7"
+        assert(Txn.Accounts[1] == addr)
+        n, d = tinyman()
     else:
         # TODO if itob(n) starts with "SUBJECTIVE", its a mistake
         abi_return("SUBJECTIVE")
@@ -136,15 +134,14 @@ block main:
     # end
 end
 
-func tinyman(lp_address: bytes) int, int:
-    # bytes lp_address = Txn.Accounts[1]
+func tinyman() int, int:
     const int LP_APP = 148607000
     const bytes ASSET_1_KEY = "asset_1_reserves"
     const bytes ASSET_2_KEY = "asset_2_reserves"
     int asset_1_reserves
-    _, asset_1_reserves = app_local_get_ex(lp_address, LP_APP, ASSET_1_KEY)
+    _, asset_1_reserves = app_local_get_ex(Txn.Accounts[1], LP_APP, ASSET_1_KEY)
     int asset_2_reserves
-    _, asset_2_reserves = app_local_get_ex(lp_address, LP_APP, ASSET_2_KEY)
+    _, asset_2_reserves = app_local_get_ex(Txn.Accounts[1], LP_APP, ASSET_2_KEY)
 
     return asset_1_reserves, asset_2_reserves
 end
