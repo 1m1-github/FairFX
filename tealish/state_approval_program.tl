@@ -41,6 +41,9 @@ end
 
 block main:
 
+    # safety
+    assert(Txn.RekeyTo == Global.ZeroAddress)
+
     int currency = Txn.Assets[0]
     int n
     int d

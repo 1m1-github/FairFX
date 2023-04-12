@@ -22,9 +22,6 @@ goal wallet new $WALLET
 goal account new -w $WALLET
 goal clerk send -a 1000000 -f $CREATOR -t $A -w $WALLET
 
-99,866
-368,413,727
-
 # create teal
 tealish compile $TEALISH_DIR/$APPROVAL_FILE_NAME.tl
 tealish compile $TEALISH_DIR/$CLEAR_FILE_NAME.tl
