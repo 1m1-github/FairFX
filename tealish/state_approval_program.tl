@@ -42,7 +42,10 @@ end
 block main:
 
     # safety
-    assert(Txn.RekeyTo == Global.ZeroAddress)
+    int e = Global.GroupSize-1
+    for i in 0:e:
+        assert(Gtxn[i].RekeyTo == Global.ZeroAddress)
+    end
 
     int currency = Txn.Assets[0]
     int n = 0
