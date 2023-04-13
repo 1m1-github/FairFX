@@ -80,11 +80,22 @@ delete_app:
 // block main
 main:
   
+  // safety
+  // assert(Txn.RekeyTo == Global.ZeroAddress)
+  txn RekeyTo
+  global ZeroAddress
+  ==
+  assert
+  
   // int currency = Txn.Assets[0] [slot 0]
   txna Assets 0
   store 0 // currency
-  // int n [slot 1]
-  // int d [slot 2]
+  // int n = 0 [slot 1]
+  pushint 0
+  store 1 // n
+  // int d = 0 [slot 2]
+  pushint 0
+  store 2 // d
   // bytes addr [slot 3]
   
   // USDC
@@ -114,7 +125,7 @@ main:
     load 0 // currency
     pushint 21582981
     ==
-    bz l1_else
+    bz l1_end
       // addr DNPVHOLSYCBDA6UAB3MREZN6W4MZZV4OL227B5ABABQTHCJFMLD345JPXE
       // addr = "\x1b_S\xb9r\xc0\x820z\x80\x0e\xd9\x12e\xbe\xb7\x19\x9c\xd7\x8e^\xb5\xf0\xf4\x01\x00a3\x89%b\xc7"
       pushbytes "\x1b_S\xb9r\xc0\x820z\x80\x0e\xd9\x12e\xbe\xb7\x19\x9c\xd7\x8e^\xb5\xf0\xf4\x01\x00a3\x89%b\xc7"
@@ -128,16 +139,6 @@ main:
       callsub __func__tinyman
       store 1 // n
       store 2 // d
-    b l1_end
-    l1_else:
-    // else:
-      // TODO if itob(n) starts with "SUBJECTIVE", its a mistake
-      // abi_return("SUBJECTIVE")
-      pushbytes "SUBJECTIVE"
-      callsub __func__abi_return
-      // exit(1)
-      pushint 1
-      return
     l1_end: // end
   
   // bytes nb = abi_encode_uint64(n) [slot 4]
