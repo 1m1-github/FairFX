@@ -45,8 +45,8 @@ block main:
     assert(Txn.RekeyTo == Global.ZeroAddress)
 
     int currency = Txn.Assets[0]
-    int n
-    int d
+    int n = 0
+    int d = 0
     bytes addr
 
     # USDC
@@ -61,10 +61,6 @@ block main:
         addr = "\x1b_S\xb9r\xc0\x820z\x80\x0e\xd9\x12e\xbe\xb7\x19\x9c\xd7\x8e^\xb5\xf0\xf4\x01\x00a3\x89%b\xc7"
         assert(Txn.Accounts[1] == addr)
         n, d = tinyman()
-    else:
-        # TODO if itob(n) starts with "SUBJECTIVE", its a mistake
-        abi_return("SUBJECTIVE")
-        exit(1)
     end
 
     bytes nb = abi_encode_uint64(n)
