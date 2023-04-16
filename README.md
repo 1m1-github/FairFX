@@ -1,10 +1,10 @@
 # FairFX
 on DLT FX rates for **any** currency
 
-Smart Contract API returns fx_n and fx_d with:
+Smart Contract API returns $FX_n$ and $FX_d$ with:
 
 FX of given currency to default DLT currency represented as a fraction:
-$fx_n/fx_d$
+$FX_n/FX_d$
 
 + ccy is subjective: return 0/0
 + ccy is objective: return current value derived from connector
