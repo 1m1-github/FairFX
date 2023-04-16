@@ -1,21 +1,16 @@
-=
-FairFX
-FX rates for **any** currency 
+# FairFX
+on DLT FX rates for **any** currency
 
+Smart Contract API returns fx_n and fx_d with:
 
-== 
-is a smart contract 
-+ ccy is subjective: return *subjective*
+FX of given currency to default DLT currency represented as a fraction:
+$fx_n/fx_d$
+
++ ccy is subjective: return 0/0
 + ccy is objective: return current value derived from connector
 + objective is defined as the set of ccys that have a connector installed
-+ connectors can be added/removed (theoretically by governance) 
++ connectors can be added/removed (theoretically by governance)
 + connectors call on-DLT sources (e.g. DEXs for a current FX rate)
-+ connectors can have arbitrary complexity, including liquiDity requirements or choices of metric (bid-ask middle, twap, etc.) 
++ connectors can have arbitrary complexity, including liquidity requirements or choices of metric (bid-ask middle, TWAP, etc.)
 
-base currency is the default energy currency of the DLT 
-
-first implementation will use:
-tealish.tinyman.org
-https://tinyman.org/
-ABI e.g.: https://github.com/tinymanorg/tealish/blob/31b6d81e04df359525a22d6daaabcc086ba77a53/examples/arc4/app.tl
-
+base currency is the default energy currency of the DLT
