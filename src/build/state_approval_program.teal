@@ -81,230 +81,187 @@ delete_app:
 main:
   
   // safety
-  // assert(Txn.RekeyTo == Global.ZeroAddress)
-  txn RekeyTo
-  global ZeroAddress
-  ==
-  assert
+  // int e = Global.GroupSize-1 [slot 0]
+  global GroupSize
+  pushint 1
+  -
+  store 0 // e
+  // for i in 0:e:
+    pushint 0
+    store 1 // i
+    l1_for:
+    load 1 // i
+    load 0 // e
+    ==
+    bnz l1_end
+    
+    // assert(Gtxn[i].RekeyTo == Global.ZeroAddress)
+    load 1 // i
+    gtxns RekeyTo
+    global ZeroAddress
+    ==
+    assert
+    // assert(Gtxn[i].AssetCloseTo == Global.ZeroAddress)
+    load 1 // i
+    gtxns AssetCloseTo
+    global ZeroAddress
+    ==
+    assert
+    // assert(Gtxn[i].CloseRemainderTo == Global.ZeroAddress)
+    load 1 // i
+    gtxns CloseRemainderTo
+    global ZeroAddress
+    ==
+    assert
+    
+    // stay empty
+    // if Gtxn[i].TypeEnum == Pay:
+      load 1 // i
+      gtxns TypeEnum
+      pushint 1 // Pay
+      ==
+      bz l2_end
+      // then:
+        // assert(Gtxn[i].Receiver != Global.CurrentApplicationAddress)
+        load 1 // i
+        gtxns Receiver
+        global CurrentApplicationAddress
+        !=
+        assert
+      l2_end: // end
+    // if Gtxn[i].TypeEnum == Axfer:
+      load 1 // i
+      gtxns TypeEnum
+      pushint 4 // Axfer
+      ==
+      bz l3_end
+      // then:
+        // assert(Gtxn[i].AssetReceiver != Global.CurrentApplicationAddress)
+        load 1 // i
+        gtxns AssetReceiver
+        global CurrentApplicationAddress
+        !=
+        assert
+      l3_end: // end
+    
+    load 1 // i
+    pushint 1
+    +
+    store 1 // i
+    b l1_for
+    l1_end: // end
   
-  // int currency = Txn.Assets[0] [slot 0]
+  
+  
+  // int currency = Txn.Assets[0] [slot 1]
   txna Assets 0
-  store 0 // currency
-  // int n = 0 [slot 1]
+  store 1 // currency
+  // int n = 0 [slot 2]
   pushint 0
-  store 1 // n
-  // int d = 0 [slot 2]
+  store 2 // n
+  // int d = 0 [slot 3]
   pushint 0
-  store 2 // d
-  // bytes addr [slot 3]
+  store 3 // d
+  // bytes addr [slot 4]
   
   // USDC
   // if currency == 10458941:
-    load 0 // currency
+    load 1 // currency
     pushint 10458941
     ==
-    bz l1_elif_0
+    bz l4_elif_0
     // then:
       // addr UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y
       // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
       pushbytes "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
-      store 3 // addr
+      store 4 // addr
       // assert(Txn.Accounts[1] == addr)
       txna Accounts 1
-      load 3 // addr
+      load 4 // addr
       ==
       assert
       // n, d = tinyman()
       callsub __func__tinyman
-      store 1 // n
-      store 2 // d
+      store 2 // n
+      store 3 // d
       // TINYAU
-    b l1_end
-    l1_elif_0:
+    b l4_end
+    l4_elif_0:
     // elif currency == 21582981:
-    load 0 // currency
+    load 1 // currency
     pushint 21582981
     ==
-    bz l1_end
+    bz l4_end
       // addr DNPVHOLSYCBDA6UAB3MREZN6W4MZZV4OL227B5ABABQTHCJFMLD345JPXE
       // addr = "\x1b_S\xb9r\xc0\x820z\x80\x0e\xd9\x12e\xbe\xb7\x19\x9c\xd7\x8e^\xb5\xf0\xf4\x01\x00a3\x89%b\xc7"
       pushbytes "\x1b_S\xb9r\xc0\x820z\x80\x0e\xd9\x12e\xbe\xb7\x19\x9c\xd7\x8e^\xb5\xf0\xf4\x01\x00a3\x89%b\xc7"
-      store 3 // addr
+      store 4 // addr
       // assert(Txn.Accounts[1] == addr)
       txna Accounts 1
-      load 3 // addr
+      load 4 // addr
       ==
       assert
       // n, d = tinyman()
       callsub __func__tinyman
-      store 1 // n
-      store 2 // d
-    l1_end: // end
+      store 2 // n
+      store 3 // d
+    l4_end: // end
   
-  // bytes nb = abi_encode_uint64(n) [slot 4]
-  load 1 // n
+  // bytes nb = abi_encode_uint64(n) [slot 5]
+  load 2 // n
   callsub __func__abi_encode_uint64
-  store 4 // nb
-  // bytes db = abi_encode_uint64(d) [slot 5]
-  load 2 // d
+  store 5 // nb
+  // bytes db = abi_encode_uint64(d) [slot 6]
+  load 3 // d
   callsub __func__abi_encode_uint64
-  store 5 // db
+  store 6 // db
   // abi_return(concat(nb, db))
-  load 4 // nb
-  load 5 // db
+  load 5 // nb
+  load 6 // db
   concat
   callsub __func__abi_return
   // exit(1)
   pushint 1
   return
-  
-  // block add:
-  //     # Add 2 integers
-  //     int x = btoi(Txn.ApplicationArgs[1])
-  //     int y = btoi(Txn.ApplicationArgs[2])
-  //     int result = x + y
-  //     abi_return(abi_encode_uint64(result))
-  //     exit(1)
-  // end
-  
-  // block mulw:
-  //     # Multiply 2 integers, returing a uint128
-  //     bytes x = Txn.ApplicationArgs[1]
-  //     bytes y = Txn.ApplicationArgs[2]
-  //     bytes result = x b* y
-  //     abi_return(abi_encode_uint128(result))
-  //     exit(1)
-  // end
-  
-  
-  // block hello:
-  //     # Return a greeting
-  //     bytes name = abi_decode_string(Txn.ApplicationArgs[1])
-  //     bytes result = concat("Hello ", name)
-  //     abi_return(abi_encode_string(result))
-  //     exit(1)
-  // end
-  
-  // block send:
-  //     # Send some Algo to the given address
-  //     bytes address = Txn.ApplicationArgs[1]
-  //     inner_txn:
-  //         TypeEnum: Pay
-  //         Receiver: address
-  //         Amount: 10000000
-  //         Fee: 0
-  //     end
-  //     exit(1)
-  // end
-  
-  // block store_data:
-  //     # Store some fixed size data in a box with the specified key
-  //     bytes key = Txn.ApplicationArgs[1]
-  //     bytes data = Txn.ApplicationArgs[2]
-  //     box_put(key, data)
-  //     exit(1)
-  // end
-  
-  // block store_tuple:
-  //     # Store some structured data in a box with the specified key
-  //     bytes key = Txn.ApplicationArgs[1]
-  //     # Item data = Txn.ApplicationArgs[2]
-  //     # make some assertion about the data for the fun of it
-  //     # assert(data.owner == Txn.Sender)
-  //     # box_put(key, data)
-  //     exit(1)
-  // end
-  
-  // block balance:
-  //     # Return balance of the specified account
-  //     int result = balance(Txn.Accounts[btoi(Txn.ApplicationArgs[1])])
-  //     abi_return(abi_encode_uint64(result))
-  //     exit(1)
-  // end
 
 // func tinyman() int, int:
 __func__tinyman:
-// int asset_1_reserves [slot 6]
+// int asset_1_reserves [slot 7]
 // _, asset_1_reserves = app_local_get_ex(Txn.Accounts[1], LP_APP, ASSET_1_KEY)
 txna Accounts 1
 pushint 148607000 // LP_APP
 pushbytes "asset_1_reserves" // ASSET_1_KEY
 app_local_get_ex
 pop // discarding value for _
-store 6 // asset_1_reserves
-// int asset_2_reserves [slot 7]
+store 7 // asset_1_reserves
+// int asset_2_reserves [slot 8]
 // _, asset_2_reserves = app_local_get_ex(Txn.Accounts[1], LP_APP, ASSET_2_KEY)
 txna Accounts 1
 pushint 148607000 // LP_APP
 pushbytes "asset_2_reserves" // ASSET_2_KEY
 app_local_get_ex
 pop // discarding value for _
-store 7 // asset_2_reserves
+store 8 // asset_2_reserves
 
 // return asset_1_reserves, asset_2_reserves
-load 7 // asset_2_reserves
-load 6 // asset_1_reserves
+load 8 // asset_2_reserves
+load 7 // asset_1_reserves
 retsub
-
-// func is_obj():
-//     return
-// end
-
-// func abi_return_int(result):
-//     # log(concat("\x15\x1f\x7c\x75", result))
-//     # log(result)
-//     int r = result
-//     teal:
-//         store 0
-//     end
-//     log(itob(result0))
-//     return
-// end
 
 // func abi_return(result: bytes):
 __func__abi_return:
-store 8 // result
+store 9 // result
 // log(concat("\x15\x1f\x7c\x75", result))
 // log(result)
-load 8 // result
+load 9 // result
 log
 // return
 retsub
 
-// func abi_decode_string(value: bytes) bytes:
-//     # return the content portion of the string, skipping the first 2 bytes which encode the length
-//     return extract(2, 0, value)
-// end
-
-// func abi_encode_string(value: bytes) bytes:
-//     # return the bytestring with a uint16 prefix denoting the length
-//     return concat(extract(6, 2, itob(len(value))), value)
-// end
-
 // func abi_encode_uint64(value: int) bytes:
 __func__abi_encode_uint64:
-store 9 // value
+store 10 // value
 // return itob(value)
-load 9 // value
+load 10 // value
 itob
 retsub
-
-// func abi_encode_uint32(value: int) bytes:
-//     # return the last 4 bytes
-//     return extract(4, 4, itob(value))
-// end
-
-// func abi_encode_uint16(value: int) bytes:
-//     # return the last 2 bytes
-//     return extract(6, 2, itob(value))
-// end
-
-// func abi_encode_uint8(value: int) bytes:
-//     # return the last 1 byte
-//     return extract(7, 1, itob(value))
-// end
-
-// func abi_encode_uint128(value: bytes) bytes:
-//     # return 16 bytes with zero padding
-//     return bzero(16) b| value
-// end

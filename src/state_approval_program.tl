@@ -44,8 +44,22 @@ block main:
     # safety
     int e = Global.GroupSize-1
     for i in 0:e:
+        
         assert(Gtxn[i].RekeyTo == Global.ZeroAddress)
+        assert(Gtxn[i].AssetCloseTo == Global.ZeroAddress)
+        assert(Gtxn[i].CloseRemainderTo == Global.ZeroAddress)
+
+        # stay empty
+        if Gtxn[i].TypeEnum == Pay:
+            assert(Gtxn[i].Receiver != Global.CurrentApplicationAddress)
+        end
+        if Gtxn[i].TypeEnum == Axfer:
+            assert(Gtxn[i].AssetReceiver != Global.CurrentApplicationAddress)
+        end
+
     end
+
+
 
     int currency = Txn.Assets[0]
     int n = 0
