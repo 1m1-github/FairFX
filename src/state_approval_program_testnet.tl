@@ -1,7 +1,5 @@
 #pragma version 8
 
-bytes a = 0xA0CB69F476DDFB1CC3175408CCF991B00983DB0FFE2807E54FB7AC956D27DBB2
-
 if Txn.ApplicationID == 0:
     # Handle Create App
     exit(1)
