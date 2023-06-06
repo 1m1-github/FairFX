@@ -1,9 +1,8 @@
-#  https://developer.algorand.org/docs/run-a-node/setup/install/#sync-node-network-using-fast-catchup
+# https://developer.algorand.org/docs/run-a-node/setup/install/#sync-node-network-using-fast-catchup
 # chrome://inspect/#devices
 
 # set env vars for terminal
 export ALGORAND_DATA="$HOME/algorand/testnetdata"
-export WALLET=Fair
 export TEALISH_DIR=./src
 export TEAL_DIR=./src/build
 export TXNS_DIR=./txns
@@ -64,7 +63,7 @@ tealdbg debug test/build/test.teal -d $TXNS_DIR/dryrun.json --group-index 1 --mo
 goal clerk rawsend --filename $TXNS_DIR/call.stxn
 
 # debug
-goal clerk send --amount 100000 --from $CREATOR --to $APP_ACCOUNT --wallet $WALLET
+goal clerk send --amount 100000 --from $CREATOR --to $APP_ACCOUNT
 goal clerk dryrun -t $TXNS_DIR/init.stxn --dryrun-dump -o $TXNS_DIR/dryrun.json
 tealdbg debug $SYSTEM_APPROVAL_FILE -d $TXNS_DIR/dryrun.json --group-index 0
 // update - disabled in prod

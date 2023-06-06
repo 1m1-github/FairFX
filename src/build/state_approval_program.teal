@@ -151,8 +151,6 @@ main:
     b l1_for
     l1_end: // end
   
-  
-  
   // int currency = Txn.Assets[0] [slot 1]
   txna Assets 0
   store 1 // currency
@@ -165,15 +163,17 @@ main:
   // bytes addr [slot 4]
   
   // USDC
-  // if currency == 10458941:
+  // if currency == 31566704:
     load 1 // currency
-    pushint 10458941
+    pushint 31566704
     ==
     bz l4_elif_0
     // then:
-      // addr UDFWT5DW3X5RZQYXKQEMZ6MRWAEYHWYP7YUAPZKPW6WJK3JH3OZPL7PO2Y
+      // addr 2PIFZW53RHCSFSYMCFUBW4XOCXOMB7XOYQSQ6KGT3KVGJTL4HM6COZRNMM
+      // addr = 0xd3d05cdbbb89c522cb0c11681b72ee15dcc0feeec4250f28d3daaa64cd7c3b3c
       // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
-      pushbytes "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      // pushbytes "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 2PIFZW53RHCSFSYMCFUBW4XOCXOMB7XOYQSQ6KGT3KVGJTL4HM6COZRNMM
       store 4 // addr
       // assert(Txn.Accounts[1] == addr)
       txna Accounts 1
@@ -184,17 +184,568 @@ main:
       callsub __func__tinyman
       store 2 // n
       store 3 // d
-      // TINYAU
+      // PEPE
     b l4_end
     l4_elif_0:
-    // elif currency == 21582981:
+    // elif currency == 1096015467:
     load 1 // currency
-    pushint 21582981
+    pushint 1096015467
+    ==
+    bz l4_elif_1
+      // addr QT2GLKM6FSVHQMRQ53POMDBMCHH452FERI6WGNAT2J34KVRZPV6GA5DGOI
+      // addr = 0x84f465a99e2caa783230eedee60c2c11cfcee8a48a3d633413d277c556397d7c
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0x84f465a99e2caa783230eedee60c2c11cfcee8a48a3d633413d277c556397d7c
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // OPUL
+    b l4_end
+    l4_elif_1:
+    // elif currency == 287867876:
+    load 1 // currency
+    pushint 287867876
+    ==
+    bz l4_elif_2
+      // addr 6JRMS5GWPSRHBDKNWO46PDVMOLWYURW2VXZEWBR2QOKHOFNR2VLAFDU3TU
+      // addr = 0xf262c974d67ca2708d4db3b9e78eac72ed8a46daadf24b063a83947715b1d556
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0xf262c974d67ca2708d4db3b9e78eac72ed8a46daadf24b063a83947715b1d556
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // GALGO
+    b l4_end
+    l4_elif_2:
+    // elif currency == 793124631:
+    load 1 // currency
+    pushint 793124631
+    ==
+    bz l4_elif_3
+      // addr 6NAKH5IVZGBDTDEETKV6SLBJNDHZZASX2YO2CUPESH2IPRBN3LSKCH4E2M
+      // addr = 0xf340a3f515c982398c849aabe92c2968cf9c8257d61da151e491f487c42ddae4
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0xf340a3f515c982398c849aabe92c2968cf9c8257d61da151e491f487c42ddae4
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // PLANETS
+    b l4_end
+    l4_elif_3:
+    // elif currency == 27165954:
+    load 1 // currency
+    pushint 27165954
+    ==
+    bz l4_elif_4
+      // addr X2YCX7P6MUEANKFOTTDXXKTAZFKKKYZ544W6TWFARGVRTEWQQNZP4BY7ZA
+      // addr = 0xbeb02bfdfe650806a8ae9cc77baa60c954a5633de72de9d8a089ab1992d08372
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0xbeb02bfdfe650806a8ae9cc77baa60c954a5633de72de9d8a089ab1992d08372
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // DEFLY
+    b l4_end
+    l4_elif_4:
+    // elif currency == 470842789:
+    load 1 // currency
+    pushint 470842789
+    ==
+    bz l4_elif_5
+      // addr DJIP7MVWAAJKTPDG7SEH64OD4QIZMRHOH5LYHY4YXWRZRG6YMD2ERJ4C2Q
+      // addr = 0x1a50ffb2b60012a9bc66fc887f71c3e4119644ee3f5783e398bda3989bd860f4
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0x1a50ffb2b60012a9bc66fc887f71c3e4119644ee3f5783e398bda3989bd860f4
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // AKTA
+    b l4_end
+    l4_elif_5:
+    // elif currency == 523683256:
+    load 1 // currency
+    pushint 523683256
+    ==
+    bz l4_elif_6
+      // addr 6FS7FD2Q6LCSCDDMAQMRZFYRXAC7XATD5XE777TH5HP3CKYRINMF4YNYJA
+      // addr = 0xf165f28f50f2c5210c6c04191c9711b805fb8263edc9fffe67e9dfb12b114358
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0xf165f28f50f2c5210c6c04191c9711b805fb8263edc9fffe67e9dfb12b114358
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // GOBTC
+    b l4_end
+    l4_elif_6:
+    // elif currency == 386192725:
+    load 1 // currency
+    pushint 386192725
+    ==
+    bz l4_elif_7
+      // addr FKMV6GSU57764TQ5NLSBEDXNPUXL7OAOKANVDP2A6FSB77BHI3GTWHQAZA
+      // addr = 0x2a995f1a54efffee4e1d6ae4120eed7d2ebfb80e501b51bf40f1641ffc2746cd
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0x2a995f1a54efffee4e1d6ae4120eed7d2ebfb80e501b51bf40f1641ffc2746cd
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // CHIP
+    b l4_end
+    l4_elif_7:
+    // elif currency == 388592191:
+    load 1 // currency
+    pushint 388592191
+    ==
+    bz l4_elif_8
+      // addr TVFMM3ZTK3QJM2BT5AZ4O3VIU4XMODAGWJ2AMAJ64OI55NO5DLHXS4ADTY
+      // addr = 0x9d4ac66f3356e0966833e833c76ea8a72ec70c06b27406013ee391deb5dd1acf
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0x9d4ac66f3356e0966833e833c76ea8a72ec70c06b27406013ee391deb5dd1acf
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // RIO
+    b l4_end
+    l4_elif_8:
+    // elif currency == 2751733:
+    load 1 // currency
+    pushint 2751733
+    ==
+    bz l4_elif_9
+      // addr 7UDZ3MGXEYHJ2OGC5ST4WEHE7GRHEGWIBTPX6L4NUKHINGFEMFGESRXFXI
+      // addr = 0xfd079db0d7260e9d38c2eca7cb10e4f9a2721ac80cdf7f2f8da28e8698a4614c
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0xfd079db0d7260e9d38c2eca7cb10e4f9a2721ac80cdf7f2f8da28e8698a4614c
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // USDT
+    b l4_end
+    l4_elif_9:
+    // elif currency == 312769:
+    load 1 // currency
+    pushint 312769
+    ==
+    bz l4_elif_10
+      // addr MM4NTQDAT32TSVDE65YXYUPDFVMVP2LUREJCQ4PJV4MFQCW5VV23Y5SEHM
+      // addr = 0x6338d9c0609ef5395464f7717c51e32d5957e97489122871e9af18580addad75
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0x6338d9c0609ef5395464f7717c51e32d5957e97489122871e9af18580addad75
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // INFT
+    b l4_end
+    l4_elif_10:
+    // elif currency == 975807033:
+    load 1 // currency
+    pushint 975807033
+    ==
+    bz l4_elif_11
+      // addr XQZ7P6QN6A77RHWK6G3LTCBHZJG3NRZFUT6BYJMOTOUAAWHBL7AEKNAV2I
+      // addr = 0xbc33f7fa0df03ff89ecaf1b6b98827ca4db6c725a4fc1c258e9ba80058e15fc0
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0xbc33f7fa0df03ff89ecaf1b6b98827ca4db6c725a4fc1c258e9ba80058e15fc0
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // BUTTS
+    b l4_end
+    l4_elif_11:
+    // elif currency == 753137719:
+    load 1 // currency
+    pushint 753137719
+    ==
+    bz l4_elif_12
+      // addr BQ64QBC7CLJI5SUMOWZPYHN4R4RRI52LUWGDO2SASVWJ7KABC66LPW6A4Q
+      // addr = 0x0c3dc8045f12d28eca8c75b2fc1dbc8f2314774ba58c376a40956c9fa80117bc
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0x0c3dc8045f12d28eca8c75b2fc1dbc8f2314774ba58c376a40956c9fa80117bc
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // YLDY
+    b l4_end
+    l4_elif_12:
+    // elif currency == 226701642:
+    load 1 // currency
+    pushint 226701642
+    ==
+    bz l4_elif_13
+      // addr VTO4WOPIS4TAYYECOZXS6LHMACE46MWW36X3A7X5MKJVK37UCC6IFJFULI
+      // addr = 0xacddcb39e897260c6082766f2f2cec0089cf32d6dfafb07efd6293556ff410bc
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0xacddcb39e897260c6082766f2f2cec0089cf32d6dfafb07efd6293556ff410bc
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // SKYNET
+    b l4_end
+    l4_elif_13:
+    // elif currency == 1076768277:
+    load 1 // currency
+    pushint 1076768277
+    ==
+    bz l4_elif_14
+      // addr RIGDKWA7VJNZ4OAKNV53UJ4RDKA2DOFVFZ2U4VDP64IR4CKSNOP45EVAX4
+      // addr = 0x8a0c35581faa5b9e380a6d7bba27911a81a1b8b52e754e546ff7111e09526b9f
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0x8a0c35581faa5b9e380a6d7bba27911a81a1b8b52e754e546ff7111e09526b9f
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // BLOCK
+    b l4_end
+    l4_elif_14:
+    // elif currency == 251014570:
+    load 1 // currency
+    pushint 251014570
+    ==
+    bz l4_elif_15
+      // addr P6ZE6ZTUZCMRUXHJ7ZFAXYDZSUYZRJHAEG3NYGHYZURLOMOEMRILCYJTVM
+      // addr = 0x7fb24f6674c8991a5ce9fe4a0be079953198a4e021b6dc18f8cd22b731c46450
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0x7fb24f6674c8991a5ce9fe4a0be079953198a4e021b6dc18f8cd22b731c46450
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // BRD
+    b l4_end
+    l4_elif_15:
+    // elif currency == 1054801592:
+    load 1 // currency
+    pushint 1054801592
+    ==
+    bz l4_elif_16
+      // addr SKFWGGQAFA2DPZXCPUNBWZZGI42ZWCJ35XYTN6XFFZATHY355NBRVP5BEU
+      // addr = 0x928b631a00283437e6e27d1a1b672647359b093bedf136fae52e4133e37deb43
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0x928b631a00283437e6e27d1a1b672647359b093bedf136fae52e4133e37deb43
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // ROOBZ
+    b l4_end
+    l4_elif_16:
+    // elif currency == 790704501:
+    load 1 // currency
+    pushint 790704501
+    ==
+    bz l4_elif_17
+      // addr 2JKSQ4VSLLTPJB6E7FFKO5BMUUPCBKC75QMCJF4K4JE6URFF2JNJW23V4I
+      // addr = 0xd2552872b25ae6f487c4f94aa7742ca51e20a85fec1824978ae249ea44a5d25a
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0xd2552872b25ae6f487c4f94aa7742ca51e20a85fec1824978ae249ea44a5d25a
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // GOETH
+    b l4_end
+    l4_elif_17:
+    // elif currency == 386195940:
+    load 1 // currency
+    pushint 386195940
+    ==
+    bz l4_elif_18
+      // addr L6CDM74YQEZ7RABX7AGTD32ZJEMDOJ5OGY4QNGZUS35S5VPIGC5UNHZTPA
+      // addr = 0x5f84367f988133f88037f80d31ef5949183727ae3639069b3496fb2ed5e830bb
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0x5f84367f988133f88037f80d31ef5949183727ae3639069b3496fb2ed5e830bb
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // IAQ
+    b l4_end
+    l4_elif_18:
+    // elif currency == 923640017:
+    load 1 // currency
+    pushint 923640017
+    ==
+    bz l4_elif_19
+      // addr ED57RDPEG53HHJKAHQGFBF74GUZ5JHH464424OZ4NSOJVV5VAL5YLZXQ5U
+      // addr = 0x20fbf88de4377673a5403c0c5097fc3533d49cfcf739ae3b3c6c9c9ad7b502fb
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0x20fbf88de4377673a5403c0c5097fc3533d49cfcf739ae3b3c6c9c9ad7b502fb
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // COSG
+    b l4_end
+    l4_elif_19:
+    // elif currency == 1065092715:
+    load 1 // currency
+    pushint 1065092715
+    ==
+    bz l4_elif_20
+      // addr 4PE4NCV73L26GIUKZPZTIEASAERJQL2E4IFVXPTOPWVQFZ2RHCQW3VU7AM
+      // addr = 0xe3c9c68abfdaf5e3228acbf33410120122982f44e20b5bbe6e7dab02e75138a1
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0xe3c9c68abfdaf5e3228acbf33410120122982f44e20b5bbe6e7dab02e75138a1
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // DHARM
+    b l4_end
+    l4_elif_20:
+    // elif currency == 818432243:
+    load 1 // currency
+    pushint 818432243
+    ==
+    bz l4_elif_21
+      // addr RAMRCQUQBSWOKOLV6OGBK6LTURVFMY2Z4U47FFO2NIPEOUI53UMRYW2TZY
+      // addr = 0x88191142900cace53975f38c157973a46a566359e539f295da6a1e47511ddd19
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0x88191142900cace53975f38c157973a46a566359e539f295da6a1e47511ddd19
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // MOIST
+    b l4_end
+    l4_elif_21:
+    // elif currency == 756578163:
+    load 1 // currency
+    pushint 756578163
+    ==
+    bz l4_elif_22
+      // addr UFSDSEJIMDSZY6AN2ZWJDJS2YSYVAXDSO5FLJAPCTS2NGRGTAEJDGR34QY
+      // addr = 0xa16439112860e59c780dd66c91a65ac4b1505c72774ab481e29cb4d344d30112
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0xa16439112860e59c780dd66c91a65ac4b1505c72774ab481e29cb4d344d30112
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // SMILE
+    b l4_end
+    l4_elif_22:
+    // elif currency == 300208676:
+    load 1 // currency
+    pushint 300208676
+    ==
+    bz l4_elif_23
+      // addr JEHWNGR6SW3VWEHFHCNWHNQFVS5U7FW2P6JCGU327Z2DNN2RL77EIVESUQ
+      // addr = 0x490f669a3e95b75b10e5389b63b605acbb4f96da7f9223537afe7436b7515ffe
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0x490f669a3e95b75b10e5389b63b605acbb4f96da7f9223537afe7436b7515ffe
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // GP
+    b l4_end
+    l4_elif_23:
+    // elif currency == 403499324:
+    load 1 // currency
+    pushint 403499324
+    ==
+    bz l4_elif_24
+      // addr G6ACWKTWJAFNSEAIDNBUIX6UOSDBRXL46ULGBD62RQTM7CLM6IYF2WT3UQ
+      // addr = 0x37802b2a76480ad910081b43445fd4748618dd7cf516608fda8c26cf896cf230
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0x37802b2a76480ad910081b43445fd4748618dd7cf516608fda8c26cf896cf230
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // ZONE
+    b l4_end
+    l4_elif_24:
+    // elif currency == 444035862:
+    load 1 // currency
+    pushint 444035862
+    ==
+    bz l4_elif_25
+      // addr FX2SYGWYWUEMJCQCL33VH36P4NI2STOWXATPIEVEKJKRCDHDSHFLJNDACM
+      // addr = 0x2df52c1ad8b508c48a025ef753efcfe351a94dd6b826f412a45255110ce391ca
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0x2df52c1ad8b508c48a025ef753efcfe351a94dd6b826f412a45255110ce391ca
+      store 4 // addr
+      // assert(Txn.Accounts[1] == addr)
+      txna Accounts 1
+      load 4 // addr
+      ==
+      assert
+      // n, d = tinyman()
+      callsub __func__tinyman
+      store 2 // n
+      store 3 // d
+      // XUT
+    b l4_end
+    l4_elif_25:
+    // elif currency == 947923645:
+    load 1 // currency
+    pushint 947923645
     ==
     bz l4_end
-      // addr DNPVHOLSYCBDA6UAB3MREZN6W4MZZV4OL227B5ABABQTHCJFMLD345JPXE
-      // addr = "\x1b_S\xb9r\xc0\x820z\x80\x0e\xd9\x12e\xbe\xb7\x19\x9c\xd7\x8e^\xb5\xf0\xf4\x01\x00a3\x89%b\xc7"
-      pushbytes "\x1b_S\xb9r\xc0\x820z\x80\x0e\xd9\x12e\xbe\xb7\x19\x9c\xd7\x8e^\xb5\xf0\xf4\x01\x00a3\x89%b\xc7"
+      // addr 7GYM7BFFGSE3WOGWF6M47VXORZKTP37FULMLPHWMTH2ICDQ6DPCXXUH6Q4
+      // addr = 0xf9b0cf84a53489bb38d62f99cfd6ee8e5537efe5a2d8b79ecc99f4810e1e1bc5
+      // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
+      pushbytes 0xf9b0cf84a53489bb38d62f99cfd6ee8e5537efe5a2d8b79ecc99f4810e1e1bc5
       store 4 // addr
       // assert(Txn.Accounts[1] == addr)
       txna Accounts 1
@@ -229,7 +780,7 @@ __func__tinyman:
 // int asset_1_reserves [slot 7]
 // _, asset_1_reserves = app_local_get_ex(Txn.Accounts[1], LP_APP, ASSET_1_KEY)
 txna Accounts 1
-pushint 148607000 // LP_APP
+pushint 1002541853 // LP_APP
 pushbytes "asset_1_reserves" // ASSET_1_KEY
 app_local_get_ex
 pop // discarding value for _
@@ -237,7 +788,7 @@ store 7 // asset_1_reserves
 // int asset_2_reserves [slot 8]
 // _, asset_2_reserves = app_local_get_ex(Txn.Accounts[1], LP_APP, ASSET_2_KEY)
 txna Accounts 1
-pushint 148607000 // LP_APP
+pushint 1002541853 // LP_APP
 pushbytes "asset_2_reserves" // ASSET_2_KEY
 app_local_get_ex
 pop // discarding value for _
