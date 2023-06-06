@@ -173,7 +173,7 @@ main:
       // addr = 0xd3d05cdbbb89c522cb0c11681b72ee15dcc0feeec4250f28d3daaa64cd7c3b3c
       // addr = "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
       // pushbytes "\xa0\xcbi\xf4v\xdd\xfb\x1c\xc3\x17T\x08\xcc\xf9\x91\xb0\t\x83\xdb\x0f\xfe(\x07\xe5O\xb7\xac\x95m'\xdb\xb2"
-      pushbytes 2PIFZW53RHCSFSYMCFUBW4XOCXOMB7XOYQSQ6KGT3KVGJTL4HM6COZRNMM
+      pushbytes 0xd3d05cdbbb89c522cb0c11681b72ee15dcc0feeec4250f28d3daaa64cd7c3b3c
       store 4 // addr
       // assert(Txn.Accounts[1] == addr)
       txna Accounts 1
